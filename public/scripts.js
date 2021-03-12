@@ -7,4 +7,24 @@ for (item of menuItems) {
   };
 };
 
-console.log(currentPage);
+
+// PAGINAÇÃO
+
+let totalPages = 20,
+  selectedPage = 15.
+  pages = []
+;
+
+for (let currentPage = 1; currentPage <= totalPages; currentPage++) {
+
+  const firstAndLastPage = currentPage == 1 || currentPage == totalPages;
+  const pagesAfterSelectedPage = currentPage <= selectedPage + 2;
+  const pagesBeforeSelectedPage = currentPage >= selectedPage - 2;
+  
+  if (firstAndLastPage || pagesBeforeSelectedPage && pagesAfterSelectedPage) {
+    pages.push (currentPage);
+  };
+
+};
+
+console.log (pages);
