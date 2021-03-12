@@ -112,19 +112,33 @@ module.exports = {
   paginate (params) {
     const { filter, limit, offset, callback } = params;
 
+    let query = '',
+      filterQuery = '',
+      totalQuery = `(
+        SELECT count(*)
+        FROM instructors
+      ) AS total,
+      `
+    ; 
+
     let query = `
-      SELECT instructors.*,
+      SELECT instructors.*, 
       count(members) AS total_students
       FROM instructors
       LEFT JOIN members ON (instructors.id = members.instructor_id)
     `
 
     if (filter) {
-      query = `
-        ${query}
+
+      filterQuery = `
         WHERE instructors.name ILIKE '%${filter}%'
         OR instructors.services ILIKE '%${filter}%'
       `
+      totalQuery = `(
+        SELECT count(*)
+        FROM instructors
+        ${filterQuery}
+      ) AS total`
     };
 
     query = `
