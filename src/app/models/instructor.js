@@ -121,13 +121,6 @@ module.exports = {
       `
     ; 
 
-    let query = `
-      SELECT instructors.*, 
-      count(members) AS total_students
-      FROM instructors
-      LEFT JOIN members ON (instructors.id = members.instructor_id)
-    `
-
     if (filter) {
 
       filterQuery = `
@@ -142,7 +135,12 @@ module.exports = {
     };
 
     query = `
-      ${query}
+      SELECT instructors.*,
+      ${totalQuery},
+      count(members) AS total_students
+      FROM instructors
+      LEFT JOIN members ON (instructors.id = members.instructor_id)
+      ${filterQuery}
       GROUP BY instructors.id
       ORDER BY total_students DESC
       LIMIT $1
