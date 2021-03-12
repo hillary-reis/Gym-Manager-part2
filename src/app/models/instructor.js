@@ -117,7 +117,7 @@ module.exports = {
       totalQuery = `(
         SELECT count(*)
         FROM instructors
-      ) AS total,
+      ) AS total
       `
     ; 
 
